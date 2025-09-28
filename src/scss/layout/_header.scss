@@ -1,0 +1,120 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+.header{
+  /* Alto del header: controlado por variable */
+  --h: 64px;
+
+  position: sticky; top:0; inset-inline:0; z-index:50;
+  backdrop-filter: saturate(160%) blur(6px);
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 1px 0 rgba(2,8,23,.06);
+
+  &__bar{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:.8rem;
+    padding:.5rem 0;        /* móvil compacto */
+    min-height: var(--h);
+  }
+
+  &__brand{
+    display:flex; align-items:center; gap:.6rem;
+    color:inherit; text-decoration:none;
+
+    &-img img{
+      height: 28px;         /* móvil */
+      width:auto; max-width:none; display:block;
+      @include m.tablet{ height: 40px; }
+    }
+
+    &-title{
+      font-family: v.$font-heading;
+      font-weight: v.$bold;
+      font-size: 1.05rem;
+      line-height: 1;
+      @include m.tablet{ font-size: 1.25rem; }
+    }
+  }
+
+  @include m.tablet{
+    --h: 80px;              /* desktop más alto */
+  }
+}
+
+/* ===== Nav ===== */
+.nav{
+  &__toggle{
+    border:0; background:transparent; padding:.375rem; border-radius:.5rem;
+    display:inline-flex; align-items:center; justify-content:center;
+    width:40px; height:40px; font-size:1.5rem; color:#0f172a;
+    &:focus-visible{ outline:3px solid v.$ring; }
+    @include m.tablet{ display:none; }
+  }
+
+  /* Panel móvil */
+  &__links{
+    position: fixed;
+    top: var(--h); left:0; right:0;
+    background:#fff;
+    border-top:1px solid v.$gris-borde;
+    box-shadow:0 .5rem 1.25rem rgba(2,8,23,.06);
+    display:flex; flex-direction:column;
+    gap:.25rem; padding:.5rem .75rem;
+    max-height: calc(100dvh - var(--h));
+    overflow:auto;
+    z-index:40;
+
+    /* Animación de aparición */
+    transform: translateY(-8px);
+    opacity: 0; visibility: hidden;
+    transition: transform .22s ease, opacity .22s ease, visibility 0s linear .22s;
+
+    &.is-open{
+      transform: none; opacity: 1; visibility: visible;
+      transition: transform .22s ease, opacity .22s ease, visibility 0s;
+    }
+
+    /* Desktop: vuelve a fila tradicional */
+    @include m.tablet{
+      position: static;
+      background: transparent;
+      border: 0; box-shadow: none;
+      padding: 0; gap: 1rem;
+      max-height: none; overflow: visible;
+      transform: none; opacity:1; visibility:visible;
+      flex-direction: row;
+    }
+  }
+
+  &__link, &__btn{
+    display:inline-flex; align-items:center; gap:.6rem;
+    padding:.55rem .75rem;
+    border-radius:.6rem;
+    font-weight:500; line-height:1; color:v.$negro;
+    background:transparent; border:0; cursor:pointer; text-align:left;
+    &:hover{
+      background:linear-gradient(90deg, rgba(v.$azul,.08), rgba(v.$secundario,.08));
+    }
+  }
+
+  &__dropdown{ position:relative; }
+  &__menu{
+    list-style:none; margin:0; padding:.4rem 0; display:none; flex-direction:column;
+    background:#fff; border:1px solid v.$gris-borde; border-radius:.6rem;
+    box-shadow:0 .5rem 1.25rem rgba(2,8,23,.06);
+
+    /* En desktop, desplegable absoluto */
+    @include m.tablet{
+      position:absolute; top:calc(100% + .35rem); left:0; min-width:20rem;
+    }
+  }
+
+  /* Mostrar menú cuando el dropdown está expandido (móvil y desktop) */
+  &__dropdown[aria-expanded="true"] &__menu{ display:flex; }
+
+  /* Rotar chevron cuando está abierto */
+  &__dropdown[aria-expanded="true"] .fa-chevron-down{ transform: rotate(180deg); transition: transform .2s; }
+}
+
+/* Bloqueo de scroll cuando el menú móvil está abierto */
+.no-scroll{ overflow:hidden; }

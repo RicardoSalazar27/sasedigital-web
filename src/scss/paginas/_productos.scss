@@ -1,0 +1,255 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+/* ===========================
+   Página: Productos (SGH)
+   =========================== */
+
+.prod{
+  color: v.$negro;
+  font-family: v.$font-ui;
+
+  /* Base de lectura grande */
+  p{ font-size: clamp(1.1rem, 0.9vw + 1rem, 1.4rem); line-height: 1.7; }
+}
+
+/* Contenedor consistente con el sitio */
+.prod .container{
+  max-width: 1100px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+/* ===== Hero ===== */
+.prod__hero{
+  padding: 3rem 0 1.6rem;
+  background: linear-gradient(180deg,#071829 0%, #0b1324 100%);
+  color: #e7ecf5;
+  position: relative; overflow: hidden;
+
+  .eyebrow{
+    text-transform: uppercase; letter-spacing: .08em;
+    font-size: clamp(.95rem, .5vw + .85rem, 1.05rem);
+    opacity: .85; margin: 0 0 .45rem;
+  }
+
+  .prod__title{
+    font-family: v.$font-heading; font-weight: v.$black;
+    font-size: clamp(2.4rem, 2vw + 1.6rem, 3.4rem);
+    line-height: 1.08; margin: .2rem 0 .8rem;
+  }
+
+  .prod__lead{
+    max-width: 60ch;
+    font-size: clamp(1.2rem, 1vw + 1.05rem, 1.45rem);
+    opacity: .95;
+  }
+
+  .prod__actions{
+    display:flex; gap:1rem; margin-top:1.2rem; flex-wrap:wrap;
+    .btn{ text-decoration:none; display:inline-flex; align-items:center; gap:.6rem; border-radius:.9rem; }
+    .btn--primary{ @include m.boton(v.$azul, v.$blanco); }
+    .btn--ghost{
+      @include m.boton(transparent, v.$blanco);
+      border:1px solid rgba(255,255,255,.28);
+      &:hover{ background-color: rgba(255,255,255,.08); }
+    }
+  }
+}
+
+/* Imagen del hero */
+.prod__hero-media{
+  position:absolute; inset:auto 0 -10% 50%; transform:translateX(-50%);
+  opacity:.12; z-index:1;
+  picture, img{
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;          /* alinea con tus capturas (cámbialo si usas 1920x800 → 12/5) */
+    object-fit: cover;
+    max-width: none;               /* quita el tope de 1200px */
+    filter: drop-shadow(0 10px 40px rgba(0,0,0,.4));
+  }
+}
+
+/* ===== Beneficios ===== */
+.prod__bullets{
+  display:grid; gap:1.2rem; grid-template-columns:1fr; /* mobile-first */
+  padding:2.4rem 1rem; margin-top:.8rem;
+
+  .bullet{
+    background:v.$blanco; border:1px solid v.$gris-borde;
+    border-radius:14px; padding:1.2rem; display:grid; gap:.55rem;
+
+    h3{
+      font-weight:v.$black; margin:0;
+      font-size: clamp(1.35rem, 1.2vw + 1.1rem, 1.8rem);
+      line-height:1.25;
+    }
+    i{ font-size:1.55rem; color:v.$secundario; }
+    p{ margin:0; color:v.$gris; font-size: clamp(1.15rem, 0.8vw + 1rem, 1.55rem); }
+  }
+
+  @include m.tablet{ grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ===== Features / módulos ===== */
+.prod__features{
+  padding:2.4rem 0; background:#f7f9fc;
+
+  .section-title{
+    font-family:v.$font-heading; font-weight:v.$black;
+    font-size: clamp(1.6rem, 1.4vw + 1.1rem, 2.1rem);
+    margin:0 0 1.2rem;
+  }
+
+  .feat-grid{
+    display:grid; gap:1.2rem; grid-template-columns:1fr; /* mobile-first */
+    @include m.tablet{ grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .card{
+    background:v.$blanco; border:1px solid v.$gris-borde;
+    border-radius:14px; padding:1.2rem;
+
+    h4{
+      margin:0 0 .45rem;
+      font-size: clamp(1.3rem, 1vw + 1.05rem, 1.65rem);
+      font-weight:v.$black; line-height:1.25;
+    }
+    i{ color:v.$azul; margin-right:.5rem; }
+    p{ margin:0; color:v.$gris; font-size: clamp(1.15rem, 0.8vw + 1rem, 1.55rem); }
+  }
+}
+
+/* ===== Flujo ===== */
+.prod__flow{
+  padding:2.4rem 1rem;
+
+  .section-title{
+    font-family:v.$font-heading; font-weight:v.$black;
+    font-size: clamp(1.6rem, 1.4vw + 1.1rem, 2.1rem);
+    margin:0 0 1rem;
+  }
+
+  .flow{
+    margin:0; padding-left:1.2rem; display:grid; gap:.6rem;
+    li{ line-height:1.75; font-size: clamp(1.2rem, 0.9vw + 1.05rem, 1.55rem); }
+  }
+}
+
+/* ===== Galería ===== */
+.prod__gallery{
+  padding:2.4rem 0; background:v.$blanco;
+
+  .section-title{
+    font-family:v.$font-heading; font-weight:v.$black;
+    font-size: clamp(1.6rem, 1.4vw + 1.1rem, 2.1rem);
+    margin:0 0 1.2rem 1rem;
+  }
+
+  /* 1 col → 2 col ≥480 → 3 col ≥768 */
+  .gal-grid{
+    display:grid; gap:1rem; grid-template-columns:1fr;
+    @include m.telefono{ grid-template-columns: repeat(2, 1fr); }
+    @include m.tablet{ grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .gal{
+    display:grid; gap:.45rem;
+    background:v.$blanco; border:1px solid v.$gris-borde;
+    border-radius:12px; padding:.7rem; text-decoration:none; color:inherit;
+
+    picture, img{
+      display:block; width:100%; aspect-ratio:16 / 9; object-fit:cover;
+      border-radius:10px;
+    }
+    span{ font-size: clamp(1.05rem, 0.7vw + .95rem, 1.4rem); color:v.$gris; }
+  }
+}
+
+/* ===== CTA ===== */
+.prod__cta{
+  padding:2.6rem 1rem 3.2rem; text-align:center;
+  background:linear-gradient(180deg,#0b1324 0%, #071829 100%); color:#e7ecf5;
+
+  h2{
+    margin:0 0 .7rem; font-family:v.$font-heading; font-weight:v.$black;
+    font-size: clamp(2rem, 1.6vw + 1.3rem, 2.4rem);
+  }
+  p{ margin:0 0 1.2rem; opacity:.9; font-size: clamp(1.2rem, 0.8vw + 1.05rem, 1.4rem); }
+  .btn--primary{ @include m.boton(v.$azul, v.$blanco); }
+}
+
+/* Utilidad global */
+.no-scroll{ overflow:hidden; }
+
+/* ===== Animaciones (mobile-first, sin dependencias) ===== */
+
+.prod{
+  /* variables de animación */
+  --anim-duracion: .7s;
+  --anim-easing: cubic-bezier(.21,.61,.35,1);
+}
+
+/* Elemento animable (inicia oculto/sutilmente desplazado) */
+.animable{
+  opacity: 0;
+  transform: translateY(14px);
+  filter: blur(0);
+  transition:
+    opacity var(--anim-duracion) var(--anim-easing),
+    transform var(--anim-duracion) var(--anim-easing),
+    filter var(--anim-duracion) var(--anim-easing);
+  will-change: opacity, transform, filter;
+
+  /* Soporte para “stagger”: cada elemento puede traer --i (índice) para retardar */
+  transition-delay: calc(var(--anim-retardo, 0ms) + (var(--i, 0) * 90ms));
+}
+
+/* Estado visible */
+.esta-visible{
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* Variantes */
+.anim--arriba{ /* ya cubierto por defecto con translateY */ }
+.anim--escala{ transform: translateY(8px) scale(.98); }
+.anim--opacidad{ transform: none; filter: blur(6px); }
+
+/* Cuando aparecen, limpian el blur si lo hubiera */
+.esta-visible.anim--opacidad{ filter: blur(0); }
+
+/* Imagen del hero — ocupa 100% del viewport y usa 16:9 si tus capturas son 16:9 */
+.prod__hero-media{
+  position: absolute;
+  inset: auto 0 -8% 50%;           /* un poquito menos de -10% para que no se “corte” */
+  transform: translateX(-50%) translateY(var(--parallax, 0px));
+  opacity: .14;                    /* como lo traías, apenas visible detrás del texto */
+  z-index: 1;
+  pointer-events: none;            /* que no intercepte clics del hero */
+
+  picture, img{
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 12 / 5;          /* alinea con tus capturas (cámbialo si usas 1920x800 → 12/5) */
+    object-fit: cover;
+    max-width: none;               /* quita el tope de 1200px */
+    filter: drop-shadow(0 10px 40px rgba(0,0,0,.4));
+  }
+}
+
+
+/* Respeto a usuarios que reducen movimiento */
+@media (prefers-reduced-motion: reduce){
+  .animable{
+    transition: none !important;
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}

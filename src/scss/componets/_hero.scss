@@ -1,0 +1,12 @@
+@use '../base/variables' as v;
+
+.hero{
+  position:relative; min-height:88vh; display:grid; place-items:center; text-align:center; color:#fff; background:#0f172a; overflow:hidden;
+
+  &__bg{ position:absolute; inset:0; width:100%; height:100%; }
+  &__inner{ position:relative; z-index:1; padding-block:4rem; }
+  &__logo{ width:12rem; margin-inline:auto; margin-bottom:1rem; }
+  &__title{ font-weight:v.$black; }
+  &__lead{ max-width:42ch; margin:.5rem auto 1.2rem; color: v.$ink-muted; }
+  &__actions{ display:flex; gap:.8rem; justify-content:center; flex-wrap:wrap; margin-top:1.2rem; }
+}

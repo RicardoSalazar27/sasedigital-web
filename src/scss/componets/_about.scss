@@ -1,0 +1,169 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+.about{
+  background:linear-gradient(to bottom, #eff6ff 0%, #ffffff 100%);
+
+  /* G R I D – imagen pegadita a las tarjetas */
+  &__grid{
+    display: grid;
+    align-items: center;          /* centra verticalmente foto y tarjetas */
+    row-gap: 1rem;                /* menos hueco vertical en mobile */
+    column-gap: 1rem;
+
+    @include m.tablet{
+      grid-template-columns: minmax(300px, 520px) 1fr;  /* foto ~520px máx */
+      column-gap: 3rem;                                  /* + juntitas */
+    }
+    @include m.desktop{
+      column-gap: 6rem;
+    }
+  }
+
+  &__media{ justify-self: end; }  /* empuja la foto hacia las tarjetas */
+
+  &__media img{
+    display: block;
+    width: 100%;
+    max-width: 520px;             /* evita que se haga gigante */
+    border-radius: .8rem;
+    box-shadow: 0 .6rem 1.6rem rgba(2,8,23,.10);
+    margin: 0;                    /* por si algo le mete margen */
+  }
+
+  &__text{ align-self: center; }
+}
+
+.values{
+  margin-top:2.4rem; text-align:center;
+
+  &__title{
+    margin-bottom:1.4rem; font-size:2rem; font-weight:v.$bold; color:v.$azul;
+    display:flex; align-items:center; justify-content:center; gap:.6rem;
+  }
+  &__chips{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:.8rem;
+    max-width:100rem; margin-inline:auto;
+  }
+}
+
+.chip{
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.6rem 1.1rem; border-radius:999px;
+  background:linear-gradient(180deg,#fbfdff,#fff);
+  border:1px solid #e6eefb; font-weight:600; color:v.$negro;
+  box-shadow:0 1px 0 rgba(2,8,23,.05);
+  transition:transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+
+  i{ color:v.$secundario; }
+  &:hover{
+    transform:translateY(-3px); box-shadow:0 6px 16px rgba(0,0,0,.08);
+    background:v.$azul; color:#fff; i{ color:#fff; }
+  }
+}
+
+.grid-2{ display:grid; gap:1rem; @include m.tablet{ grid-template-columns:1fr 1fr; } }
+
+.card{
+  background:#fff; border:1px solid v.$gris-borde; border-radius:.9rem; padding:1.2rem;
+  box-shadow:0 .125rem .5rem rgba(3,7,18,.08), 0 .5rem 1.25rem rgba(2,8,23,.06);
+  height:100%; text-align:left;
+
+  &__icon{ font-size:2rem; color:v.$secundario; }
+  &__title{ margin:.3rem 0 .2rem; color:v.$azul; font-size:2rem; }
+  &__text{ margin:0; }
+}
+
+/* =======================================================
+   A N I M A C I O N E S  (solo CSS, sin JS)
+   ======================================================= */
+
+/* variables locales de easing/duración */
+.about, .values{
+  --easing: cubic-bezier(.21,.61,.35,1);
+  --dur: .65s;
+}
+
+/* Keyframes */
+@keyframes aparecer-arriba {
+  from { opacity:0; transform: translateY(14px); }
+  to   { opacity:1; transform: none; }
+}
+@keyframes aparecer-derecha {
+  from { opacity:0; transform: translateX(18px) scale(.98); }
+  to   { opacity:1; transform: none; }
+}
+@keyframes aparecer-escala {
+  from { opacity:0; transform: translateY(10px) scale(.97); }
+  to   { opacity:1; transform: none; }
+}
+@keyframes aparecer-blur {
+  from { opacity:0; filter: blur(6px); transform: translateY(8px); }
+  to   { opacity:1; filter: blur(0);   transform: none; }
+}
+
+/* --- Animación al cargar (fallback universal) --- */
+.about__media img{
+  will-change: transform, opacity;
+  animation: aparecer-derecha var(--dur) var(--easing) both .08s;
+}
+.about__text{
+  animation: aparecer-arriba var(--dur) var(--easing) both .12s;
+}
+.values__title{
+  animation: aparecer-blur var(--dur) var(--easing) both .06s;
+}
+.values .chip{
+  animation: aparecer-escala var(--dur) var(--easing) both;
+}
+/* escalonado para chips */
+.values .chip:nth-child(1){ animation-delay:.05s; }
+.values .chip:nth-child(2){ animation-delay:.12s; }
+.values .chip:nth-child(3){ animation-delay:.19s; }
+.values .chip:nth-child(4){ animation-delay:.26s; }
+.values .chip:nth-child(5){ animation-delay:.33s; }
+.values .chip:nth-child(6){ animation-delay:.40s; }
+
+.about .card, .grid-2 .card{
+  animation: aparecer-arriba var(--dur) var(--easing) both;
+}
+.grid-2 .card:nth-child(1){ animation-delay:.06s; }
+.grid-2 .card:nth-child(2){ animation-delay:.14s; }
+.grid-2 .card:nth-child(3){ animation-delay:.22s; }
+.grid-2 .card:nth-child(4){ animation-delay:.30s; }
+
+/* --- Scroll-driven (si el navegador lo soporta) --- */
+@supports (animation-timeline: view()){
+  /* la animación se reproduce al entrar/salir del viewport */
+  .about__media img{
+    animation-timeline: view();
+    animation-range: entry 10% cover 30%;
+  }
+  .about__text{
+    animation-timeline: view();
+    animation-range: entry 10% cover 25%;
+  }
+  .values__title{
+    animation-timeline: view();
+    animation-range: entry 0% cover 20%;
+  }
+  .values .chip{
+    animation-timeline: view();
+    animation-range: entry 10% cover 25%;
+  }
+  .about .card, .grid-2 .card{
+    animation-timeline: view();
+    animation-range: entry 12% cover 28%;
+  }
+}
+
+/* Respeta usuarios que reducen movimiento */
+@media (prefers-reduced-motion: reduce){
+  .about__media img,
+  .about__text,
+  .values__title,
+  .values .chip,
+  .about .card, .grid-2 .card{
+    animation: none !important;
+  }
+}

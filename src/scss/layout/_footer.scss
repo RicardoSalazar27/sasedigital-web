@@ -1,0 +1,147 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+/* ======================
+   Footer – móvil primero
+   ====================== */
+.footer{
+  background: linear-gradient(180deg,#0b1324 0%, #071829 100%);
+  color:#cbd5e1;
+  position:relative;
+  padding-top: 2rem;
+
+  .container{ max-width: 1100px; margin-inline:auto; padding: 0 1rem; }
+
+  /* GRID principal */
+  &__grid{
+    display:grid;
+    grid-template-columns: 1fr;      /* móvil: 1 columna */
+    gap:1.2rem;
+    padding:2rem 0 1.5rem;
+    align-items:start;
+  }
+
+  /* ===== Marca + contacto (móvil centrado) ===== */
+  &__brand{
+    display:grid;
+    justify-items:center;            /* centra logo, tagline y enlaces */
+    text-align:center;
+    row-gap:.8rem;
+  }
+
+  &__logo picture, &__logo img{
+    display:block;
+    width: clamp(60px, 26vw, 80px); /* tamaño agradable en móvil */
+    height:auto;
+    margin-inline:auto;
+    filter: drop-shadow(0 6px 20px rgba(0,0,0,.35));
+  }
+
+  &__tagline{
+    max-width: 34ch;
+    font-size: clamp(1rem,.35vw + .95rem,1.25rem);
+    opacity:.95;
+  }
+
+  &__contact{
+    display:flex; flex-direction:column; gap:.5rem;
+    align-items:center;               /* centra mail/teléfono/botón */
+    font-style:normal;
+  }
+
+  /* Botón WA: ancho completo en móvil */
+  &__btn-wa{
+    @include m.boton(v.$secundario, v.$negro);
+    display:inline-flex; align-items:center; gap:.5rem;
+    width: 100%;
+    justify-content:center;
+    font-weight:700;
+    padding:.85rem 1rem;
+    i{ font-size:1.1rem; }
+  }
+
+  /* ===== Navegación (dos columnas en móvil) ===== */
+  &__nav{
+    padding-top:1rem;
+    border-top:1px solid rgba(226,232,240,.16);
+  }
+
+  &__heading{
+    margin:.25rem 0 .6rem;
+    font-family:v.$font-heading; font-weight:v.$black;
+    font-size: clamp(1.05rem,.6vw + 1rem,1.35rem);
+    color:#e2e8f0;
+    text-align:center;
+  }
+
+  &__list{
+    list-style:none; margin:0; padding:0;
+    display:grid; gap:.75rem 1rem;
+    grid-template-columns: 1fr 1fr;   /* móvil: 2 columnas */
+    justify-items:center;             /* centra cada enlace */
+  }
+
+  &__link{
+    color:#cbd5e1; text-decoration:none; display:inline-flex; align-items:center; gap:.5rem;
+    font-size: clamp(1rem,.25vw + .95rem,1.2rem);
+    opacity:.95;
+    i{ width:1.1rem; text-align:center; }
+    &:hover{ color:#fff; opacity:1; }
+    &:focus-visible{ outline:3px solid v.$ring; outline-offset:3px; border-radius:.4rem; }
+  }
+
+  /* ===== Social centrado con separación visual ===== */
+  &__social{
+    padding-top:1rem;
+    border-top:1px solid rgba(226,232,240,.16);
+  }
+  &__social-list{
+    list-style:none; margin:.4rem 0 0; padding:0;
+    display:flex; gap:.6rem;
+  }
+  .soc{
+    width:42px; height:42px; border-radius:999px;
+    display:inline-flex; align-items:center; justify-content:center;
+    background: rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.15);
+    color:#fff; text-decoration:none;
+    &:hover{ background: rgba(255,255,255,.12); }
+    &:focus-visible{ outline:3px solid v.$ring; outline-offset:3px; }
+  }
+
+  /* ===== Legal ===== */
+  &__bottom{ border-top:1px solid rgba(226,232,240,.16); margin-top:.5rem; }
+  &__legal{
+    padding: .9rem 0 1.2rem;
+    display:flex; flex-direction:column; gap:.6rem; align-items:center; text-align:center;
+    small{ font-size:1.2rem; opacity:.9; }
+  }
+  &__legal-links{
+    list-style:none; margin:0; padding:0; display:flex; gap:.9rem; flex-wrap:wrap; justify-content:center;
+    a{ @extend .footer__link; font-size:1.1rem; opacity:.9; }
+  }
+
+  /* Volver arriba */
+  &__toTop{
+    position: absolute; right:1rem; bottom:1.1rem;
+    width:42px; height:42px; border-radius:999px; border:1px solid rgba(255,255,255,.18);
+    background: rgba(255,255,255,.08); color:#fff; cursor:pointer;
+    display:inline-flex; align-items:center; justify-content:center;
+    transition: filter .2s ease, background-color .2s ease;
+    &:hover{ background: rgba(255,255,255,.14); }
+    &:focus-visible{ outline:3px solid v.$ring; outline-offset:3px; }
+  }
+
+  /* ===== Tablet y Desktop: vuelve a tu diseño original ===== */
+  @include m.tablet{
+    &__grid{
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap:2rem; padding:2.4rem 0 1.8rem;
+    }
+    &__brand{ justify-items:start; text-align:left; }
+    &__contact{ align-items:flex-start; }
+    &__btn-wa{ width: auto; }                   /* ya no full width */
+    &__list{ grid-template-columns: 1fr; justify-items:start; }
+    &__heading{ text-align:left; }
+  }
+}

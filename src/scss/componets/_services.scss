@@ -1,0 +1,85 @@
+@use '../base/mixins' as m;
+@use '../base/variables' as v;
+
+.services{
+  background:#fff;
+
+  /* variables de animación */
+  --dur: .65s;
+  --ease: cubic-bezier(.21,.61,.35,1);
+
+  &__grid{
+    display:grid; gap:1rem;
+    @include m.tablet{ grid-template-columns:repeat(3, 1fr); }
+    @include m.desktop{ grid-template-columns:repeat(4, 1fr); }
+  }
+}
+
+/* ---------- Tarjeta ---------- */
+.service{
+  background:linear-gradient(180deg,#fbfdff,#fff);
+  border:1px solid v.$gris-borde; border-radius:.9rem; padding:1.25rem;
+  box-shadow:0 .125rem .5rem rgba(3,7,18,.08), 0 .5rem 1.25rem rgba(2,8,23,.06);
+  text-align:left;
+  will-change: transform, opacity, filter;
+
+  /* Animación de entrada (fallback universal) */
+  animation: servicio-subir var(--dur) var(--ease) both;
+
+  /* Hover/interacción */
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
+  &:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(2,8,23,.12), 0 2px 8px rgba(2,8,23,.08);
+    border-color: rgba(37,132,248,.28);
+    background: linear-gradient(180deg,#ffffff,#fbfdff);
+  }
+
+  &__icon{
+    font-size:2.2rem; color:v.$azul;
+    transform-origin: 20% 80%;
+    animation: servicio-pop var(--dur) var(--ease) both .08s;
+  }
+  &__title{ margin:.5rem 0 .25rem; font-size:2rem; }
+  &__text{ margin:0; font-size:1.6rem; }
+}
+
+/* ---------- Stagger (sin JS) ---------- */
+.services__grid > .service:nth-child(1){ animation-delay:.04s; }
+.services__grid > .service:nth-child(2){ animation-delay:.10s; }
+.services__grid > .service:nth-child(3){ animation-delay:.16s; }
+.services__grid > .service:nth-child(4){ animation-delay:.22s; }
+.services__grid > .service:nth-child(5){ animation-delay:.28s; }
+.services__grid > .service:nth-child(6){ animation-delay:.34s; }
+.services__grid > .service:nth-child(7){ animation-delay:.40s; }
+.services__grid > .service:nth-child(8){ animation-delay:.46s; }
+
+/* ---------- Keyframes ---------- */
+@keyframes servicio-subir{
+  from{ opacity:0; transform: translateY(14px); filter: blur(4px); }
+  to  { opacity:1; transform: none;            filter: blur(0); }
+}
+@keyframes servicio-pop{
+  from{ opacity:0; transform: translateY(8px) scale(.92) rotate(-3deg); }
+  to  { opacity:1; transform: none; }
+}
+
+/* ---------- Scroll-driven (si hay soporte) ---------- */
+@supports (animation-timeline: view()){
+  .service{
+    animation-timeline: view();
+    animation-range: entry 12% cover 26%;
+  }
+  .service__icon{
+    animation-timeline: view();
+    animation-range: entry 10% cover 22%;
+  }
+}
+
+/* ---------- Accesibilidad: reducir movimiento ---------- */
+@media (prefers-reduced-motion: reduce){
+  .service, .service__icon{
+    animation: none !important;
+    transition: none !important;
+  }
+}
