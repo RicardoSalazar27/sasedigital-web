@@ -43,7 +43,7 @@
         <li><a href="https://www.facebook.com/profile.php?id=61581656424638" target="_blank" rel="noopener" aria-label="Facebook" class="soc"><i class="fa-brands fa-facebook-f"></i></a></li>
         <li><a href="https://www.instagram.com/sase.digital" target="_blank" rel="noopener" aria-label="Instagram" class="soc"><i class="fa-brands fa-instagram"></i></a></li>
         <li><a href="https://www.linkedin.com/company/sase-digitall/" target="_blank" rel="noopener" aria-label="LinkedIn" class="soc"><i class="fa-brands fa-linkedin-in"></i></a></li>
-        <li><a href="#" target="_blank" rel="noopener" aria-label="YouTube" class="soc"><i class="fa-brands fa-youtube"></i></a></li>
+        <li><a href="/" target="_blank" rel="noopener" aria-label="YouTube" class="soc"><i class="fa-brands fa-youtube"></i></a></li>
       </ul>
     </div>
   </div>

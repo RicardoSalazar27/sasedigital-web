@@ -1126,6 +1126,8 @@ h3 {
   padding: 0;
   display: flex;
   gap: 0.6rem;
+  justify-content: center; /* ⬅️ clave */
+  flex-wrap: wrap; /* por si se desbordan */
 }
 .footer .soc {
   width: 42px;
@@ -1227,6 +1229,9 @@ h3 {
   .footer__list {
     grid-template-columns: 1fr;
     justify-items: start;
+  }
+  .footer__social-list {
+    justify-content: flex-start;
   }
   .footer__heading {
     text-align: left;

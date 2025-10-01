@@ -86,8 +86,8 @@
         <h2 class="section-title">Así de simple</h2>
         <ol class="flow">
             <li><strong>Busca o crea cliente</strong> (correo, teléfono o nombre).</li>
-            <li><strong>Elige fechas y habitación</strong>; el sistema muestra solo lo disponible.</li>
-            <li><strong>Confirma y cobra</strong> con descuentos/adelantos; listo el voucher.</li>
+            <li><strong>Elige fechas y habitación</strong>, el sistema muestra solo lo disponible.</li>
+            <li><strong>Confirma y cobra</strong> con descuentos/adelantos, listo el voucher.</li>
         </ol>
     </section>
 

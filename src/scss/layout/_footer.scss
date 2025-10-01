@@ -95,9 +95,11 @@
     padding-top:1rem;
     border-top:1px solid rgba(226,232,240,.16);
   }
-  &__social-list{
+   &__social-list{
     list-style:none; margin:.4rem 0 0; padding:0;
     display:flex; gap:.6rem;
+    justify-content:center;      /* ⬅️ clave */
+    flex-wrap:wrap;              /* por si se desbordan */
   }
   .soc{
     width:42px; height:42px; border-radius:999px;
@@ -142,6 +144,9 @@
     &__contact{ align-items:flex-start; }
     &__btn-wa{ width: auto; }                   /* ya no full width */
     &__list{ grid-template-columns: 1fr; justify-items:start; }
+    &__social-list{
+      justify-content:flex-start;
+    }
     &__heading{ text-align:left; }
   }
 }
