@@ -2,4 +2,3 @@ node_modules
 vendor
 includes/.env
 public/.htaccess
-public/build
